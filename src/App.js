@@ -1,11 +1,10 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import stylesheet from "./Component/Card/Card.module.css";
 import Navbar from "./Component/Navbar";
 import Card from "./Component/Card";
-import CardMeetup from "./Component/CardMeetup";
-import CardMember from "./Component/CardMember";
-import CardPastMeetup from "./Component/CardPastMeetup";
+import Btn from "./Component/Button";
 
 class App extends React.Component {
   constructor() {
@@ -74,9 +73,57 @@ class App extends React.Component {
     return (
       <>
         {<Navbar value={navbar} />}
-        {<Card value={card} />}
+        {
+          <Card value={card}>
+            <table>
+              <td>
+                <img
+                  className="image"
+                  src={card.photo}
+                  alt="John"
+                  style={{ width: 250, height: 200 }}
+                />
+              </td>
+            </table>
+            <table>
+              <td>
+                <p style={{ fontWeight: "bold" }}>{card.title}</p>
+                <p>{card.location.title}</p>
+                <p>{card.location.value}</p>
+                <p>{card.members.title}</p>
+                <p>{card.members.value}</p>
+                <p>{card.organizers.title}</p>
+                <p>{card.organizers.value}</p>
+                {<Btn value="Join Us" />}
+              </td>
+            </table>
+          </Card>
+        }
         <h3 style={{ margin: 10 }}>Next Meetup</h3>
-        {<CardMeetup value={card} />}
+        {
+          <Card value={card}>
+            <p className={stylesheet.paragraph}>Awesome meetup and event</p>
+            <p style={{ color: "grey" }}>25 January 2019</p>
+            <p className={stylesheet.paragraph}>
+              Hello, JavaScript & Node.Js Ninjas! <br />
+              Get ready for our monthly meetup JakartaJS! This will be our fifth
+              meetup of 2018! <br />
+              The meetup format will contain some short stories and technical
+              talks. <br />
+              If you have a short announcement you'd like to share with the
+              audience, you may do so during open mic accouncements.
+            </p>
+            <p className={stylesheet.paragraph}>
+              Remember to bring a photo ID to get through building security.
+            </p>
+            <p className={stylesheet.paragraph}> - - - - </p>
+            <p className={stylesheet.paragraph}>See you there!</p>
+            <p className={stylesheet.paragraph}>
+              Best, Hengki, Giovanni, Sofian, Riza, Agung The JakartaJS
+              Organizers
+            </p>
+          </Card>
+        }
         <h3 style={{ margin: 10 }}>About Meetup</h3>
         <div style={{ margin: 20 }}>
           <p>
@@ -84,9 +131,27 @@ class App extends React.Component {
             the Greater Jakarta area. <br /> <br />
             Twitter: @JakartaJS and we use the hashtag #jakartajs
           </p>
+          <h3>Members</h3>
         </div>
-        {<CardMember value={card} />}
-        {<CardPastMeetup value={cardpast} />}
+        {
+          <Card value={card}>
+            <img src={card.photo} className={stylesheet.round} />
+            <p style={{ fontWeight: "bold", fontSize: 12 }}>Organizers</p>
+            <p style={{ fontWeight: "bold", fontSize: 12 }}>
+              Adhy Wiranata 4 others.
+            </p>
+          </Card>
+        }
+        <h3>Past Meetups</h3>
+        {cardpast.map(({ date, content, view }) => (
+          <Card style={{ width: 200, height: 200 }}>
+            <p>{date}</p>
+            <hr />
+            <p>{content}</p>
+            <p>{view} went</p>
+            <Btn value={"View"} />
+          </Card>
+        ))}
       </>
     );
   };
